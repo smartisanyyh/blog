@@ -1,2 +1,2 @@
-# yangyuhan.github.io
+# blog
 blog
