@@ -170,7 +170,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-12-23 10:47:33 / Modified: 14:31:50" itemprop="dateCreated datePublished" datetime="2021-12-23T10:47:33+08:00">2021-12-23</time>
+              <time title="Created: 2021-12-23 10:47:33 / Modified: 14:35:55" itemprop="dateCreated datePublished" datetime="2021-12-23T10:47:33+08:00">2021-12-23</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -203,7 +203,7 @@
 <p>  认为锁对象的状态转换是这么个流程的同学请刷个1,这里边存在两个问题</p>
 <ol>
 <li><p><strong>并不存在无锁到偏向</strong>这么一个过程,偏向锁只能从可偏向状态或者重偏向状态获得.<br>偏向锁模式存在偏向锁延迟机制：</p>
- <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HotSpot 虚拟机在启动后有个 4s 的延迟才会对每个新建的对象开启偏向锁模式。JVM启动时会进行一系列的复杂活动，比如装载配置，系统类初始化等等。在这个过程中会使用大量<span class="keyword">synchronized</span>关键字对对象加锁，且这些锁大多数都不是偏向锁。为了减少初始化时间，JVM默认延时加载偏向锁。</span><br></pre></td></tr></table></figure>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HotSpot 虚拟机在启动后有个 4s 的延迟才会对每个新建的对象开启偏向锁模式。JVM启动时会进行一系列的复杂活动，比如装载配置，系统类初始化等等。在这个过程中会使用大量</span><br><span class="line"><span class="keyword">synchronized</span>关键字对对象加锁，且这些锁大多数都不是偏向锁。为了减少初始化时间，JVM默认延时加载偏向锁。</span><br></pre></td></tr></table></figure>
 
 <p> 在过了这个延迟偏向时间后创建出来的新对象都是可偏向状态,并不是无锁状态(除非触发了批量撤销),重偏向是触发了批量重偏向后的逻辑,只有两种获得偏向锁的途径,并不存在无锁-&gt;偏向锁  </p>
 </li>
@@ -273,7 +273,7 @@
 </code></pre>
 </li>
 </ul>
-<p><a target="_blank" rel="noopener" href="https://github.com/farmerjohngit/myblog/issues/12">其他介绍请参考</a>,这是一篇非常好的博客,写的很详细,我也就不重复总结了.  </p>
+<p>其他介绍请参考<a target="_blank" rel="noopener" href="https://github.com/farmerjohngit/myblog/issues/12">github</a>,这是一篇非常好的博客,写的很详细,我也就不重复总结了.  </p>
 
       
     </div>
