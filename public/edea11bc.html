@@ -20,21 +20,21 @@
     var CONFIG = {"hostname":"smartisanyyh.github.io","root":"/blog/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="2021-05-21 咳(感觉喉咙有痰,想咳出来,但是不太能咳出来,如果咳出来了痰是白色的) 泻 齿痕 舌苔厚腻  2021-05-20感冒症状还没好(咳嗽有痰,流涕),上次的药也还没喝完,症状好了再喝药吧 2021-05-13感冒了,暂停服药 症状: 舌苔白腻 齿痕 咽痒咳嗽 大便不成型(像鱼塘的稀泥) 头疼,咽疼(感冒) 厚眼屎 嘴巴下边长了很多痘  2021-05-12早上开始使用新方 症状">
+  <meta name="description" content="&amp;emsp;&amp;emsp;最近比较深入的研究了一下synchronized,发现网上百分之90的博客都是错的,下边我首先来总结一下一些常见的错误:  无锁-&gt;偏向-&gt;轻量-&gt;重量     认为锁对象的状态转换是这么个流程的同学请刷个1,这里边存在两个问题  并不存在无锁到偏向这么一个过程,偏向锁只能从可偏向状态或者重偏向状态获得.偏向锁模式存在偏向锁延迟机制：  1HotSpot">
 <meta property="og:type" content="article">
-<meta property="og:title" content="病机变化">
-<meta property="og:url" content="https://smartisanyyh.github.io/blog/2e66d4ef.html">
+<meta property="og:title" content="synchronized">
+<meta property="og:url" content="https://smartisanyyh.github.io/blog/edea11bc.html">
 <meta property="og:site_name" content="杨雨翰的 blog">
-<meta property="og:description" content="2021-05-21 咳(感觉喉咙有痰,想咳出来,但是不太能咳出来,如果咳出来了痰是白色的) 泻 齿痕 舌苔厚腻  2021-05-20感冒症状还没好(咳嗽有痰,流涕),上次的药也还没喝完,症状好了再喝药吧 2021-05-13感冒了,暂停服药 症状: 舌苔白腻 齿痕 咽痒咳嗽 大便不成型(像鱼塘的稀泥) 头疼,咽疼(感冒) 厚眼屎 嘴巴下边长了很多痘  2021-05-12早上开始使用新方 症状">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;最近比较深入的研究了一下synchronized,发现网上百分之90的博客都是错的,下边我首先来总结一下一些常见的错误:  无锁-&gt;偏向-&gt;轻量-&gt;重量     认为锁对象的状态转换是这么个流程的同学请刷个1,这里边存在两个问题  并不存在无锁到偏向这么一个过程,偏向锁只能从可偏向状态或者重偏向状态获得.偏向锁模式存在偏向锁延迟机制：  1HotSpot">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-05-10T09:19:33.000Z">
-<meta property="article:modified_time" content="2021-05-25T09:14:46.245Z">
+<meta property="article:published_time" content="2021-12-23T02:47:33.000Z">
+<meta property="article:modified_time" content="2021-12-23T06:31:50.181Z">
 <meta property="article:author" content="Yuhan Yang">
-<meta property="article:tag" content="养生">
-<meta property="article:tag" content="中药">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="并发">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://smartisanyyh.github.io/blog/2e66d4ef.html">
+<link rel="canonical" href="https://smartisanyyh.github.io/blog/edea11bc.html">
 
 
 <script id="page-configurations">
@@ -47,7 +47,7 @@
   };
 </script>
 
-  <title>病机变化 | 杨雨翰的 blog</title>
+  <title>synchronized | 杨雨翰的 blog</title>
   
 
 
@@ -152,7 +152,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://smartisanyyh.github.io/blog/2e66d4ef.html">
+    <link itemprop="mainEntityOfPage" href="https://smartisanyyh.github.io/blog/edea11bc.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -165,7 +165,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          病机变化
+          synchronized
         </h1>
 
         <div class="post-meta">
@@ -174,23 +174,21 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2021-05-10 17:19:33" itemprop="dateCreated datePublished" datetime="2021-05-10T17:19:33+08:00">2021-05-10</time>
+              <time title="Created: 2021-12-23 10:47:33 / Modified: 14:31:50" itemprop="dateCreated datePublished" datetime="2021-12-23T10:47:33+08:00">2021-12-23</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-05-25 17:14:46" itemprop="dateModified" datetime="2021-05-25T17:14:46+08:00">2021-05-25</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/%E5%85%BB%E7%94%9F/" itemprop="url" rel="index"><span itemprop="name">养生</span></a>
+                  <a href="/blog/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Java/%E5%B9%B6%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">并发</span></a>
                 </span>
             </span>
 
@@ -205,57 +203,83 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="2021-05-21"><a href="#2021-05-21" class="headerlink" title="2021-05-21"></a>2021-05-21</h1><ul>
-<li>咳(感觉喉咙有痰,想咳出来,但是不太能咳出来,如果咳出来了痰是白色的)</li>
-<li>泻</li>
-<li>齿痕</li>
-<li>舌苔厚腻</li>
+        <p>&emsp;&emsp;最近比较深入的研究了一下synchronized,发现网上百分之90的博客都是错的,下边我首先来总结一下一些常见的错误:</p>
+<ul>
+<li><p><font color="red">无锁-&gt;偏向-&gt;轻量-&gt;重量</font>  </p>
+<p>  认为锁对象的状态转换是这么个流程的同学请刷个1,这里边存在两个问题</p>
+<ol>
+<li><p><strong>并不存在无锁到偏向</strong>这么一个过程,偏向锁只能从可偏向状态或者重偏向状态获得.<br>偏向锁模式存在偏向锁延迟机制：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HotSpot 虚拟机在启动后有个 4s 的延迟才会对每个新建的对象开启偏向锁模式。JVM启动时会进行一系列的复杂活动，比如装载配置，系统类初始化等等。在这个过程中会使用大量<span class="keyword">synchronized</span>关键字对对象加锁，且这些锁大多数都不是偏向锁。为了减少初始化时间，JVM默认延时加载偏向锁。</span><br></pre></td></tr></table></figure>
+
+<p> 在过了这个延迟偏向时间后创建出来的新对象都是可偏向状态,并不是无锁状态(除非触发了批量撤销),重偏向是触发了批量重偏向后的逻辑,只有两种获得偏向锁的途径,并不存在无锁-&gt;偏向锁  </p>
+</li>
+<li><p>偏向-&gt;轻量<br> 这个也不是一定的,轻量锁会出现在线程<strong>交替执行</strong>的时候.<br> 假如一把锁先偏向了线程A,此时A的同步代码块里的内容已执行完,并且A已释放锁(释放偏向锁并不会做什么),但是线程A还存活(如果不存活可能触发jvm层面的线程复用,直接想线程B与Jvm的线程绑定),现在线程B尝试去获取锁,此时线程B就会触发偏向锁撤销,然后将偏向锁升级为一把轻量锁.  </p>
+<p> 很多同学认为升级重量锁必须要激烈并发,其实不然,比如上边那个场景,如果线程B去获取锁的时候,线程A还没有释放锁,线程B会尝试获取轻量锁,但是轻量锁获取失败,线程B会直接开始膨胀,创建Monitor对象,升级为重量锁,所以升级重量锁和竞争激烈与否并没有关系,<strong>只要有竞争,就会升级成重量锁</strong>;</p>
+</li>
+</ol>
+<p>  总结下获取锁的过程:首先看锁对象是否是可偏向,或者是否是可重偏向状态,如果是直接获取偏向锁,如果不是尝试获取轻量锁,轻量锁获取失败,直接开始膨胀为重量锁;</p>
+</li>
+<li><p><font color="red">轻量锁自旋</font><br>  轻量锁和偏向锁都不存在自旋,只是会尝试获取,CAS获取失败直接走下一步;</p>
+</li>
 </ul>
-<h1 id="2021-05-20"><a href="#2021-05-20" class="headerlink" title="2021-05-20"></a>2021-05-20</h1><p>感冒症状还没好(咳嗽有痰,流涕),上次的药也还没喝完,症状好了再喝药吧</p>
-<h1 id="2021-05-13"><a href="#2021-05-13" class="headerlink" title="2021-05-13"></a>2021-05-13</h1><p>感冒了,暂停服药</p>
-<h2 id="症状"><a href="#症状" class="headerlink" title="症状:"></a>症状:</h2><ul>
-<li>舌苔白腻</li>
-<li>齿痕</li>
-<li>咽痒咳嗽</li>
-<li>大便不成型(像鱼塘的稀泥)</li>
-<li>头疼,咽疼(感冒)</li>
-<li>厚眼屎</li>
-<li>嘴巴下边长了很多痘</li>
+<h2 id="阅读源码与实验的一些发现"><a href="#阅读源码与实验的一些发现" class="headerlink" title="阅读源码与实验的一些发现"></a>阅读源码与实验的一些发现</h2><ul>
+<li><p>批量重偏向修改epoch修改的是正在被锁定的对象<strong>和可偏向对象的epoch</strong>,网上很多博客说的都是修改正在被锁定对象的epoch</p>
+</li>
+<li><p>批量重偏向和批量撤销共用一个计数器 都会在25秒(默认值))后归零  </p>
+<pre><code class="C++">static HeuristicsResult update_heuristics(oop o, bool allow_rebias) &#123;
+    markOop mark = o-&gt;mark();
+    //如果不是偏向模式直接返回
+    if (!mark-&gt;has_bias_pattern()) &#123;
+        return HR_NOT_BIASED;
+    &#125;
+    
+    // 锁对象的类
+    Klass* k = o-&gt;klass();
+    // 当前时间
+    jlong cur_time = os::javaTimeMillis();
+    // 该类上一次批量撤销的时间
+    jlong last_bulk_revocation_time = k-&gt;last_biased_lock_bulk_revocation_time();
+    // 该类偏向锁撤销的次数
+    int revocation_count = k-&gt;biased_lock_revocation_count();
+    // BiasedLockingBulkRebiasThreshold是重偏向阈值（默认20），BiasedLockingBulkRevokeThreshold是批量撤销阈值（默认40），BiasedLockingDecayTime是开启一次新的批量重偏向距离上次批量重偏向的后的延迟时间，默认25000。也就是开启批量重偏向后，经过了一段较长的时间（&gt;=BiasedLockingDecayTime），撤销计数器才超过阈值，那我们会重置计数器。
+    if ((revocation_count &gt;= BiasedLockingBulkRebiasThreshold) &amp;&amp;
+        (revocation_count &lt;  BiasedLockingBulkRevokeThreshold) &amp;&amp;
+        (last_bulk_revocation_time != 0) &amp;&amp;
+        (cur_time - last_bulk_revocation_time &gt;= BiasedLockingDecayTime)) &#123;
+        // This is the first revocation we&#39;ve seen in a while of an
+        // object of this type since the last time we performed a bulk
+        // rebiasing operation. The application is allocating objects in
+        // bulk which are biased toward a thread and then handing them
+        // off to another thread. We can cope with this allocation
+        // pattern via the bulk rebiasing mechanism so we reset the
+        // klass&#39;s revocation count rather than allow it to increase
+        // monotonically. If we see the need to perform another bulk
+        // rebias operation later, we will, and if subsequently we see
+        // many more revocation operations in a short period of time we
+        // will completely disable biasing for this type.
+        k-&gt;set_biased_lock_revocation_count(0);
+        revocation_count = 0;
+    &#125;
+
+    // 自增撤销计数器
+    if (revocation_count &lt;= BiasedLockingBulkRevokeThreshold) &#123;
+        revocation_count = k-&gt;atomic_incr_biased_lock_revocation_count();
+    &#125;
+    // 如果达到批量撤销阈值则返回HR_BULK_REVOKE
+    if (revocation_count == BiasedLockingBulkRevokeThreshold) &#123;
+        return HR_BULK_REVOKE;
+    &#125;
+    // 如果达到批量重偏向阈值则返回HR_BULK_REBIAS
+    if (revocation_count == BiasedLockingBulkRebiasThreshold) &#123;
+        return HR_BULK_REBIAS;
+    &#125;
+    // 没有达到阈值则撤销单个对象的锁
+    return HR_SINGLE_REVOKE;
+&#125;
+</code></pre>
+</li>
 </ul>
-<h1 id="2021-05-12"><a href="#2021-05-12" class="headerlink" title="2021-05-12"></a>2021-05-12</h1><p>早上开始使用新方</p>
-<h2 id="症状-1"><a href="#症状-1" class="headerlink" title="症状:"></a>症状:</h2><ul>
-<li>舌苔白腻</li>
-<li>齿痕</li>
-<li>咽痒咳嗽(上午咳得厉害,下午好很多)</li>
-<li>发热汗出(早上没有一起床就想拉屎,屁股也没湿)</li>
-<li>大便不成型</li>
-<li>五更泻(今天没有早上一起床就想拉)</li>
-<li>放屁多</li>
-<li>头疼,咽疼(使用新方剂之前就有,可能是又有点感冒)</li>
-<li>恶心想吐(但是没有)</li>
-</ul>
-<h5 id="大便次数-2"><a href="#大便次数-2" class="headerlink" title="大便次数:2"></a>大便次数:2</h5><h5 id="睡眠-0-7"><a href="#睡眠-0-7" class="headerlink" title="睡眠: 0-7"></a>睡眠: 0-7</h5><h1 id="2021-05-11"><a href="#2021-05-11" class="headerlink" title="2021-05-11"></a>2021-05-11</h1><h2 id="症状-2"><a href="#症状-2" class="headerlink" title="症状:"></a>症状:</h2><ul>
-<li>舌苔逐渐变薄</li>
-<li>齿痕</li>
-<li>咽痒咳嗽(有点像上回吐泡沫状的液体之前咳嗽的感觉)</li>
-<li>发热汗出</li>
-<li>大便不成型</li>
-<li>五更泻</li>
-</ul>
-<h5 id="大便次数-2-1"><a href="#大便次数-2-1" class="headerlink" title="大便次数:2"></a>大便次数:2</h5><h1 id="2021-05-10"><a href="#2021-05-10" class="headerlink" title="2021-05-10"></a>2021-05-10</h1><h2 id="症状-3"><a href="#症状-3" class="headerlink" title="症状:"></a>症状:</h2><ul>
-<li>舌苔逐渐变薄</li>
-<li>齿痕</li>
-<li>咽痒咳嗽(有点像上回吐泡沫状的液体之前咳嗽的感觉)</li>
-<li>发热汗出(后背,屁股) 脚很热 但无汗</li>
-<li>大便逐渐成型</li>
-</ul>
-<h1 id="2021-05-07"><a href="#2021-05-07" class="headerlink" title="2021-05-07"></a>2021-05-07</h1><h2 id="症状-4"><a href="#症状-4" class="headerlink" title="症状:"></a>症状:</h2><ul>
-<li>舌苔厚</li>
-<li>齿痕</li>
-<li>咽痒咳嗽</li>
-<li>发热汗出(后背,屁股)</li>
-<li>大便溏薄</li>
-</ul>
+<p><a target="_blank" rel="noopener" href="https://github.com/farmerjohngit/myblog/issues/12">其他介绍请参考</a>,这是一篇非常好的博客,写的很详细,我也就不重复总结了.  </p>
 
     </div>
 
@@ -265,21 +289,14 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/blog/tags/%E5%85%BB%E7%94%9F/" rel="tag"># 养生</a>
-              <a href="/blog/tags/%E4%B8%AD%E8%8D%AF/" rel="tag"># 中药</a>
+              <a href="/blog/tags/Java/" rel="tag"># Java</a>
+              <a href="/blog/tags/%E5%B9%B6%E5%8F%91/" rel="tag"># 并发</a>
           </div>
 
         
 
 
         
-    <div class="post-nav">
-      <div class="post-nav-item"></div>
-      <div class="post-nav-item">
-    <a href="/blog/93d59d9.html" rel="next" title="方剂">
-      方剂 <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
       </footer>
     
   </article>
@@ -337,7 +354,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#2021-05-21"><span class="nav-number">1.</span> <span class="nav-text">2021-05-21</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2021-05-20"><span class="nav-number">2.</span> <span class="nav-text">2021-05-20</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2021-05-13"><span class="nav-number">3.</span> <span class="nav-text">2021-05-13</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%97%87%E7%8A%B6"><span class="nav-number">3.1.</span> <span class="nav-text">症状:</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2021-05-12"><span class="nav-number">4.</span> <span class="nav-text">2021-05-12</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%97%87%E7%8A%B6-1"><span class="nav-number">4.1.</span> <span class="nav-text">症状:</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A4%A7%E4%BE%BF%E6%AC%A1%E6%95%B0-2"><span class="nav-number">4.1.0.0.1.</span> <span class="nav-text">大便次数:2</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%9D%A1%E7%9C%A0-0-7"><span class="nav-number">4.1.0.0.2.</span> <span class="nav-text">睡眠: 0-7</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2021-05-11"><span class="nav-number">5.</span> <span class="nav-text">2021-05-11</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%97%87%E7%8A%B6-2"><span class="nav-number">5.1.</span> <span class="nav-text">症状:</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A4%A7%E4%BE%BF%E6%AC%A1%E6%95%B0-2-1"><span class="nav-number">5.1.0.0.1.</span> <span class="nav-text">大便次数:2</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2021-05-10"><span class="nav-number">6.</span> <span class="nav-text">2021-05-10</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%97%87%E7%8A%B6-3"><span class="nav-number">6.1.</span> <span class="nav-text">症状:</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2021-05-07"><span class="nav-number">7.</span> <span class="nav-text">2021-05-07</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%97%87%E7%8A%B6-4"><span class="nav-number">7.1.</span> <span class="nav-text">症状:</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%85%E8%AF%BB%E6%BA%90%E7%A0%81%E4%B8%8E%E5%AE%9E%E9%AA%8C%E7%9A%84%E4%B8%80%E4%BA%9B%E5%8F%91%E7%8E%B0"><span class="nav-number">1.</span> <span class="nav-text">阅读源码与实验的一些发现</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -351,13 +368,13 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">1</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/blog/categories/">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
