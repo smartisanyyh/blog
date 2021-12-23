@@ -93,4 +93,113 @@ categories:
 
     ```  
 
+    ### 验证  
+
+    ```java
+    @Slf4j
+    public class Test {
+
+        public static void main(String[] args) throws InterruptedException {
+            //延时产生可偏向对象
+            Thread.sleep(5000);
+
+            // 创建一个list，来存放锁对象
+            List<Test> locks = new ArrayList<>();
+
+            // 线程1
+            new Thread(() -> {
+                for (int i = 0; i < 30; i++) {
+                    // 新建锁对象
+                    Test lock = new Test();
+                    synchronized (lock) {
+                        locks.add(lock);
+                    }
+                }
+                try {
+                    //为了防止JVM线程复用，在创建完对象后，保持线程thead1状态为存活
+                    Thread.sleep(100000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }, "thead1").start();
+
+            //睡眠3s钟保证线程thead1创建对象完成
+            Thread.sleep(1000);
+            // 线程2
+            new Thread(() -> {
+                for (int i = 0; i < 30; i++) {
+                    Test obj = locks.get(i);
+                    synchronized (obj) {
+                        if(i>=15&&i<=21||i>=38){
+                            log.debug(Thread.currentThread().getName()+"-第" + (i + 1) + "次加锁执行中\t"+
+                                            ClassLayout.parseInstance(obj).toPrintable());
+                        }
+                    }
+                    if(i==17||i==19){
+                        log.debug(Thread.currentThread().getName()+"-第" + (i + 1) + "次释放锁\t"+
+                                        ClassLayout.parseInstance(obj).toPrintable());
+                    }
+                }
+                try {
+                    Thread.sleep(100000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }, "thead2").start();
+            //如果下边的20-30个对象任然可以重偏向,则说明批量重偏向和批量撤销共用一个计数器 都会在25秒(默认值))后归零  而且最后new的新对象任然是可偏向状态101,如果注释调这行代码则创建的新对象是无锁状态(批量撤销,关闭该Class的偏向功能),而且下边的20-30个对象会变成轻量锁
+            Thread.sleep(26000);
+
+            // 创建一个list，来存放锁对象
+            List<Test> locks1 = new ArrayList<>();
+
+            // 线程1
+            new Thread(() -> {
+                for (int i = 0; i < 30; i++) {
+                    // 新建锁对象
+                    Test lock = new Test();
+                    synchronized (lock) {
+                        locks1.add(lock);
+                    }
+                }
+                try {
+                    //为了防止JVM线程复用，在创建完对象后，保持线程thead1状态为存活
+                    Thread.sleep(100000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }, "thead3").start();
+
+            //睡眠3s钟保证线程thead1创建对象完成
+            Thread.sleep(1000);
+            // 线程2
+            new Thread(() -> {
+                for (int i = 0; i < 30; i++) {
+                    Test obj = locks1.get(i);
+                    synchronized (obj) {
+                        if(i>=15&&i<=21||i>=38){
+                            log.debug(Thread.currentThread().getName()+"-第" + (i + 1) + "次加锁执行中\t"+
+                                            ClassLayout.parseInstance(obj).toPrintable());
+                        }
+                    }
+                    if(i==17||i==19){
+                        log.debug(Thread.currentThread().getName()+"-第" + (i + 1) + "次释放锁\t"+
+                                        ClassLayout.parseInstance(obj).toPrintable());
+                    }
+                }
+                try {
+                    Thread.sleep(100000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }, "thead4").start();
+            Thread.sleep(3000);
+            Test test = new Test();
+            log.debug("新对象:" + (ClassLayout.parseInstance(test).toPrintable()));
+            LockSupport.park();
+        }
+    }
+
+
+    ```
+
 其他介绍请参考[github](https://github.com/farmerjohngit/myblog/issues/12),这是一篇非常好的博客,写的很详细,我也就不重复总结了.  
