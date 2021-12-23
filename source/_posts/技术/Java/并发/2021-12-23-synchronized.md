@@ -8,6 +8,7 @@ tags:
 categories:
 - [Java, 并发]
 ---
+## 常见错误  
 
 &emsp;&emsp;最近比较深入的研究了一下synchronized,发现网上百分之90的博客都是错的,下边我首先来总结一下一些常见的错误:
 
