@@ -39,7 +39,7 @@ categories:
 - 批量重偏向修改epoch修改的是正在被锁定的对象**和可偏向对象的epoch**,网上很多博客说的都是修改正在被锁定对象的epoch
 - 批量重偏向和批量撤销共用一个计数器 都会在25秒(默认值))后归零  
 
-{% codeblock lang:C++ %}
+{% codeblock JVM源码 lang:C++ %}
     static HeuristicsResult update_heuristics(oop o, bool allow_rebias) {
         markOop mark = o->mark();
         //如果不是偏向模式直接返回
