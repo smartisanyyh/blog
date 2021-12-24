@@ -18,10 +18,10 @@ categories:
     1. **并不存在无锁到偏向**这么一个过程,偏向锁只能从可偏向状态或者重偏向状态获得.  
     偏向锁模式存在偏向锁延迟机制：
 
-        ```java
+        {% codeblock lang:java %}
         HotSpot 虚拟机在启动后有个 4s 的延迟才会对每个新建的对象开启偏向锁模式。JVM启动时会进行一系列的复杂活动，比如装载配置，系统类初始化等等。在这个过程中会使用大量
         synchronized关键字对对象加锁，且这些锁大多数都不是偏向锁。为了减少初始化时间，JVM默认延时加载偏向锁。
-        ```
+        {% endcodeblock %}
 
         在过了这个延迟偏向时间后创建出来的新对象都是可偏向状态,并不是无锁状态(除非触发了批量撤销),重偏向是触发了批量重偏向后的逻辑,只有两种获得偏向锁的途径,并不存在无锁->偏向锁  
     2. 偏向->轻量  
@@ -39,14 +39,13 @@ categories:
 - 批量重偏向修改epoch修改的是正在被锁定的对象**和可偏向对象的epoch**,网上很多博客说的都是修改正在被锁定对象的epoch
 - 批量重偏向和批量撤销共用一个计数器 都会在25秒(默认值))后归零  
 
-    ```C++
+{% codeblock lang:C++ %}
     static HeuristicsResult update_heuristics(oop o, bool allow_rebias) {
         markOop mark = o->mark();
         //如果不是偏向模式直接返回
         if (!mark->has_bias_pattern()) {
             return HR_NOT_BIASED;
         }
-        
         // 锁对象的类
         Klass* k = o->klass();
         // 当前时间
@@ -90,12 +89,11 @@ categories:
         // 没有达到阈值则撤销单个对象的锁
         return HR_SINGLE_REVOKE;
     }
+{% endcodeblock %}
 
-    ```  
+### 验证
 
-    ### 验证  
-
-    ```java
+{% codeblock lang:java %}
     @Slf4j
     public class Test {
 
@@ -146,7 +144,9 @@ categories:
                     e.printStackTrace();
                 }
             }, "thead2").start();
-            //如果下边的20-30个对象任然可以重偏向,则说明批量重偏向和批量撤销共用一个计数器 都会在25秒(默认值))后归零  而且最后new的新对象任然是可偏向状态101,如果注释调这行代码则创建的新对象是无锁状态(批量撤销,关闭该Class的偏向功能),而且下边的20-30个对象会变成轻量锁
+        /*如果下边的20-30个对象任然可以重偏向,则说明批量重偏向和批量撤销共用一个计数器 都会在25秒(默认值)后归零,
+          而且最后new的新对象任然是可偏向状态101,如果注释掉的话这行代码则创建的新对象是无锁状态(批量撤销,关闭该Class的偏向锁功能),
+          而且下边的20-30个对象会变成轻量锁*/
             Thread.sleep(26000);
 
             // 创建一个list，来存放锁对象
@@ -198,8 +198,6 @@ categories:
             LockSupport.park();
         }
     }
-
-
-    ```
+{% endcodeblock %}
 
 其他介绍请参考[github](https://github.com/farmerjohngit/myblog/issues/12),这是一篇非常好的博客,写的很详细,我也就不重复总结了.  
